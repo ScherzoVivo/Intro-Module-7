@@ -70,3 +70,22 @@ Lines 109-130 deal primarily with data validation. Using a pair of try/except bl
 58	    return
 ```
 > Figure 3. Data validation
+
+In the event any of these conditions are not met, an exception is raised and the error is handled on lines 128-130 (as within the load_data function).
+
+Lines 134-153 are a stylized way of confirming the user’s input. The obtained data is printed to the screen and the user is asked to approve. If they type “y” or “yes”, the data is bundled into a dictionary object in lines 155-164 before being added to the working master_data list on line 166, which is then returned at the end of the function.
+
+## Section 5: Removing Records
+The function that allows a user to remove records from the data is fairly simple, and this is where the ID number of the record is important. The logic being that the user will have a far easier time inputting small number as opposed to typing in a full task name to indicate what should be removed. This method cycles through all records, starting on line 186, and if it finds an ID number matching the one entered by the user (on line 184), the script displays a formatted single datafame record (the record appears looking tidy and easy to read with minimal code, which is one of the reasons I’ve opted to use the Pandas module in this script).
+
+If the user confirms the action, the pop method is run on line 199 to remove the record from the master_data list, which is then returned into the main loop.
+
+## Section 6: Saving Data
+The save_data function operates in a nearly identical way to the load_data function defined above. As before, it confirms that the filename entered by the user has to correct extension before using the Pickle module to pack the master_data list object into a binary file. It then asks if the user would like to exit, terminating the script if the user confirms.
+
+## Section 7: Main Loop
+The final block of code, comprised of lines 244-289, is the primary loop for the function. Before actually entering into the loop, the script runs the load_data function described above to pull any current data from the applicable file. To initialize the loop I set the running variable to True and use it in a while loop. The first step of each loop iteration is to display the main menu, written in a print statement over multiple lines.
+
+Following the menu is a brief try/except block that validates the user’s menu choice, raising a ValueError and returning to the beginning of the loop if something other than one of the menu option numbers is entered. 
+
+The final chunk of code is the event handler determining which process to run based on the user input. The only thing different here is the code for option #3 – View Records (lines 283-285)– which simply formats the current working data into a pretty pandas data frame before printing it to the screen. I opted to avoid a function for this since the code was only two lines and the docstring would end up being longer than the function itself! Note that in order to avoid displaying the data frame’s numerical record index (which may differ from the assigned ID number), we use the “index=False” argument in the to_string method.
